@@ -49,6 +49,9 @@ Videos = function(data) {
     // Creating a models array collection
     this.models = [];
 
+    // Defining the viewCountTotal
+    this.viewCount = 0;
+
     // Init method
     this.initialize = function(data) {
 
@@ -76,8 +79,32 @@ Videos = function(data) {
 
 // fn: Adding models to the collection
 Videos.prototype.add = function(model) {
+
+    // Return false if model is not defined
+    if(!model) return false;
+
+    // Pushing the model to the collection
     this.models.push(model);
+
+    // Adding video view count to total
+    this.addViewCount(model);
+
+    // Returning the collection
     return this;
+};
+
+Videos.prototype.addViewCount = function(model) {
+
+    // Return false if model is not defined
+    if(!model) return false;
+
+    var viewCount = model.attributes.viewCount;
+    if(viewCount) {
+        this.viewCount = this.viewCount + viewCount;
+    }
+
+    return this;
+
 };
 
 // Exporting the collection
@@ -138,7 +165,7 @@ var entry;
 entry = function() {
 
     // Defining the viewCount
-    var viewCount = false;
+    var viewCount = 0;
 
     // Update the viewCount if it is available from stats
     var stats = this.yt$statistics;
@@ -152,7 +179,7 @@ entry = function() {
         published: this.published.$t,
         title: this.title.$t,
         thumbnail: this.media$group.media$thumbnail[2].url,
-        viewCount: viewCount
+        viewCount: parseInt(viewCount, 10)
     };
 
 };

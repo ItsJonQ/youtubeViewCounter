@@ -7,7 +7,7 @@ var entry;
 entry = function() {
 
     // Defining the viewCount
-    var viewCount = false;
+    var viewCount = 0;
 
     // Update the viewCount if it is available from stats
     var stats = this.yt$statistics;
@@ -21,7 +21,7 @@ entry = function() {
         published: this.published.$t,
         title: this.title.$t,
         thumbnail: this.media$group.media$thumbnail[2].url,
-        viewCount: viewCount
+        viewCount: parseInt(viewCount, 10)
     };
 
 };
