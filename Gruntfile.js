@@ -7,20 +7,20 @@ module.exports = function(grunt) {
         browserify: {
             main: {
                 src: 'js/app.js',
-                dest: 'public/main.js'
+                dest: 'public/js/main.js'
             }
         },
 
         jshint: {
             files: ['js/**/*.js'],
             options: {
+                force: true,
                 strict: true,
                 smarttabs: true,
                 globals: {
                     jQuery: true,
                     console: true,
-                    module: true,
-                    exports: true
+                    module: true
                 }
             }
         },
