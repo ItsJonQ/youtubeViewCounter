@@ -1,10 +1,9 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 // Utils
 var fetch = require('./utils/utils.fetch');
-var parse = require('./utils/utils.parse');
 
-// Models
-var VideoModel = require('./models/models.Video');
+// Collection
+var Videos = require('./collections/collections.Video.js');
 
 // Init
 var init;
@@ -24,25 +23,66 @@ init = function() {
         var entries = feed.entry;
         if(!entries) return false;
 
-        // Looping through all the entries (videos)
-        for(var i = 0, len = entries.length; i < len; i++) {
+        // Creating the video Collection
+        var videos = new Videos(entries);
 
-            // Defining a single entry
-            var entry = entries[i];
-
-            // Creating a Video model from entry
-            var Video = new VideoModel(parse.entry.call(entry));
-
-            console.log(Video);
-
-        }
+        console.log(videos);
 
     });
 };
 
 // Start the application
 init();
-},{"./models/models.Video":2,"./utils/utils.fetch":3,"./utils/utils.parse":4}],2:[function(require,module,exports){
+},{"./collections/collections.Video.js":2,"./utils/utils.fetch":4}],2:[function(require,module,exports){
+// Utils
+var parse = require('../utils/utils.parse');
+// Models
+var VideoModel = require('../models/models.Video');
+
+
+// Defining the collection
+var Videos;
+
+// Creating the video collection class
+Videos = function(data) {
+
+    // Creating a models array collection
+    this.models = [];
+
+    // Init method
+    this.initialize = function(data) {
+
+        if(!data) return false;
+
+        // Looping through all the entries (videos)
+        for(var i = 0, len = data.length; i < len; i++) {
+
+            // Defining a single entry
+            var entry = data[i];
+
+            // Creating a Video model from entry
+            var Video = new VideoModel(parse.entry.call(entry));
+
+            this.add(Video);
+
+        }
+
+    };
+
+    // Executing the init method on creation
+    this.initialize(data);
+
+};
+
+// fn: Adding models to the collection
+Videos.prototype.add = function(model) {
+    this.models.push(model);
+    return this;
+};
+
+// Exporting the collection
+module.exports = Videos;
+},{"../models/models.Video":3,"../utils/utils.parse":5}],3:[function(require,module,exports){
 // Defining Video (class / model)
 var Video;
 
@@ -55,7 +95,7 @@ Video = function(attributes) {
 
 // Exporting the Video class (model)
 module.exports = Video;
-},{}],3:[function(require,module,exports){
+},{}],4:[function(require,module,exports){
 // Define the fetch method
 var fetch;
 
@@ -88,7 +128,7 @@ fetch = function(callback) {
 
 // Export the fetch method
 module.exports = fetch;
-},{}],4:[function(require,module,exports){
+},{}],5:[function(require,module,exports){
 // Defining parse vars
 var parse;
 var entry;

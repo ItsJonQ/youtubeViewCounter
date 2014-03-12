@@ -1,9 +1,8 @@
 // Utils
 var fetch = require('./utils/utils.fetch');
-var parse = require('./utils/utils.parse');
 
-// Models
-var VideoModel = require('./models/models.Video');
+// Collection
+var Videos = require('./collections/collections.Video.js');
 
 // Init
 var init;
@@ -23,18 +22,10 @@ init = function() {
         var entries = feed.entry;
         if(!entries) return false;
 
-        // Looping through all the entries (videos)
-        for(var i = 0, len = entries.length; i < len; i++) {
+        // Creating the video Collection
+        var videos = new Videos(entries);
 
-            // Defining a single entry
-            var entry = entries[i];
-
-            // Creating a Video model from entry
-            var Video = new VideoModel(parse.entry.call(entry));
-
-            console.log(Video);
-
-        }
+        console.log(videos);
 
     });
 };
