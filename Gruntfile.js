@@ -28,7 +28,7 @@ module.exports = function(grunt) {
         watch: {
             scripts: {
                 files: ['js/**/*.js'],
-                tasks: ['jshint', 'browserify:main']
+                tasks: ['browserify:main']
             }
         }
 
@@ -42,7 +42,7 @@ module.exports = function(grunt) {
 
 
     // Tasks
-    grunt.registerTask('default', ['jshint', 'browserify', 'watch']);
+    grunt.registerTask('default', ['browserify', 'watch']);
 
     grunt.registerTask('bund', ['jshint', 'browserify']);
 
