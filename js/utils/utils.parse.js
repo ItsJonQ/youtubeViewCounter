@@ -17,8 +17,13 @@ entry = function() {
 
     // Return the attributes as object
     return {
+        id: this.media$group.yt$videoid.$t,
         link: this.link[0].href,
         published: this.published.$t,
+        rating: {
+            likes: parseInt(this.yt$rating.numLikes, 10),
+            dislikes: parseInt(this.yt$rating.numDislikes, 10)
+        },
         title: this.title.$t,
         thumbnail: this.media$group.media$thumbnail[2].url,
         viewCount: parseInt(viewCount, 10)
