@@ -57,16 +57,21 @@ Videos.prototype.add = function(model) {
     return this;
 };
 
+// fn: Adding view counts from the model to the view counts in the collection
 Videos.prototype.addViewCount = function(model) {
 
     // Return false if model is not defined
     if(!model) return false;
 
+    // Defining the viewCount from the model
     var viewCount = model.attributes.viewCount;
+
+    // Adding the viewCount to the collection's viewCount
     if(viewCount) {
         this.viewCount = this.viewCount + viewCount;
     }
 
+    // Returning the collection
     return this;
 
 };
