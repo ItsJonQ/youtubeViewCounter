@@ -24,13 +24,29 @@
     <!-- Container -->
     <div class="container">
 
-        <!-- Video List Container -->
-        <div class="col-md-8 col-solo">
+        <!-- Video List Wrapper -->
+        <section class="col-md-8 col-solo video-list-wrapper">
+
+            <!-- Video List Header -->
+            <div class="heading">
+
+                <!-- Playlist Title -->
+                <h3 data-bind="text: attributes().title" class="title"></h3>
+
+                <!-- View Count (Total) -->
+                <span class="badge" data-bind="text: attributes().viewCount"></span>
+
+            </div>
 
             <!-- Video List -->
-                <ul data-bind="template: { name: 'video-list-template', foreach: models }" class="list-group"></ul>
+            <ul data-bind="template: { name: 'video-list-template', foreach: models }" class="list-group"></ul>
 
-        </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="col-md-8 col-solo text-center">
+            <small>Developed by <strong>Q</strong>. Built for <a href="http://www.technobuffalo.com/" target="_blank">TechnoBuffalo</a>. Powered by <a href="http://knockoutjs.com/" target="_blank">KnockoutJS</a>. 2014.</small>
+        </footer>
 
     </div>
 
@@ -45,7 +61,7 @@
             <!-- Video Media -->
             <div class="block-media image">
                 <a data-bind="attr: { href: attributes.link }" target="_blank">
-                    <!-- <img data-bind="attr:{ src: attributes.thumbnail }" /> -->
+                    <img data-bind="attr:{ src: attributes.thumbnail }" />
                 </a>
             </div>
 

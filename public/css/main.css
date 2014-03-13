@@ -8,10 +8,25 @@ img {
     height: auto;
 }
 
+.video-list-wrapper {
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
 .col-solo {
     margin-left: auto;
     margin-right: auto;
     float: none;
+}
+
+.heading {
+    overflow: hidden;
+}
+
+.heading .title {
+    display: inline-block;
+    margin: 10px 15px 10px 0;
+    vertical-align: middle;
 }
 
 .list-group-item {
@@ -19,7 +34,7 @@ img {
 }
 
 .list-group-item .title {
-    font-size: 16px;
+    font-size: 15px;
     line-height: 1.25em;
     margin-top: 5px;
     font-weight: bold;
@@ -58,4 +73,22 @@ img {
 
 .like-dislike span {
     font-weight: bold;
+}
+
+footer {
+    margin-bottom: 40px;
+}
+
+@media (max-width: 579px) {
+    .block-media {
+        display: none;
+    }
+
+    .block-content {
+        padding: 0;
+    }
+
+    .like-dislike li {
+        display: block;
+    }
 }

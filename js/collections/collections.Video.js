@@ -26,11 +26,19 @@ Videos = function(data) {
 
         if(!data) return false;
 
+        // Defining feed from data
+        var feed = data.feed;
+        if(!feed) return false;
+
+        // Defining entries from the data
+        var entries = feed.entry;
+        if(!entries) return false;
+
         // Looping through all the entries (videos)
-        for(var i = 0, len = data.length; i < len; i++) {
+        for(var i = 0, len = entries.length; i < len; i++) {
 
             // Defining a single entry
-            var entry = data[i];
+            var entry = entries[i];
 
             // Creating a Video model from entry
             var Video = new VideoModel(parse.entry.call(entry));
@@ -44,6 +52,31 @@ Videos = function(data) {
             return compare.desc(a, b);
         });
 
+        // Setting the attributes for the collection
+        this.setAttributes(feed);
+
+        ko.applyBindings(this);
+
+        return this;
+
+    };
+
+    // Setting the attributes for the collection
+    this.setAttributes = function(data) {
+
+        // Creating the attributes object
+        var attributes = {
+            link: data.link[0].href,
+            title: data.title.$t,
+            videos: this.models().length,
+            viewCount: this.viewCount
+        };
+
+        // Setting the attributes to the collection, and making it observable (KO)
+        this.attributes = ko.observable(attributes);
+
+        // Returning the collection
+        return this;
     };
 
     // Executing the init method on creation
