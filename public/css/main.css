@@ -1,0 +1,61 @@
+body {
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+.col-solo {
+    margin-left: auto;
+    margin-right: auto;
+    float: none;
+}
+
+.list-group-item {
+    overflow: hidden;
+}
+
+.list-group-item .title {
+    font-size: 16px;
+    line-height: 1.25em;
+    margin-top: 5px;
+    font-weight: bold;
+}
+
+.list-group-item .title a {
+    color: #333;
+}
+
+.block-media.image {
+    width: 120px;
+    height: 68px;
+    overflow: hidden;
+    float: left;
+}
+
+.block-media .image img {
+    width: 100%;
+}
+
+.block-content {
+    overflow: hidden;
+    width: auto;
+    padding-left: 15px;
+}
+
+.like-dislike {
+    color: #999;
+}
+
+.like-dislike li {
+    display: inline-block;
+    margin-right: 15px;
+    min-width: 90px;
+}
+
+.like-dislike span {
+    font-weight: bold;
+}

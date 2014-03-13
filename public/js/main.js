@@ -15,6 +15,8 @@ init = function() {
     // Fetch data from YouTube
     fetch(function(data) {
 
+        console.log(data);
+
         // Defining feed from data
         var feed = data.feed;
         if(!feed) return false;
@@ -26,6 +28,8 @@ init = function() {
         // Creating the video Collection
         var videos = new Videos(entries);
 
+        ko.applyBindings(videos);
+
         console.log(videos);
 
     });
@@ -33,9 +37,11 @@ init = function() {
 
 // Start the application
 init();
-},{"./collections/collections.Video.js":2,"./utils/utils.fetch":4}],2:[function(require,module,exports){
+},{"./collections/collections.Video.js":2,"./utils/utils.fetch":5}],2:[function(require,module,exports){
 // Utils
+var compare = require('../utils/utils.compare');
 var parse = require('../utils/utils.parse');
+
 // Models
 var VideoModel = require('../models/models.Video');
 
@@ -46,8 +52,11 @@ var Videos;
 // Creating the video collection class
 Videos = function(data) {
 
+    // Defining the Attributes for this collection
+    this.attributes = {};
+
     // Creating a models array collection
-    this.models = [];
+    this.models = ko.observableArray([]);
 
     // Defining the viewCountTotal
     this.viewCount = 0;
@@ -69,6 +78,11 @@ Videos = function(data) {
             this.add(Video);
 
         }
+
+        // Sorting the models by DESC order (based on Date)
+        this.models().sort(function(a, b) {
+            return compare.desc(a, b);
+        });
 
     };
 
@@ -114,7 +128,7 @@ Videos.prototype.addViewCount = function(model) {
 
 // Exporting the collection
 module.exports = Videos;
-},{"../models/models.Video":3,"../utils/utils.parse":5}],3:[function(require,module,exports){
+},{"../models/models.Video":3,"../utils/utils.compare":4,"../utils/utils.parse":6}],3:[function(require,module,exports){
 // Defining Video (class / model)
 var Video;
 
@@ -128,6 +142,44 @@ Video = function(attributes) {
 // Exporting the Video class (model)
 module.exports = Video;
 },{}],4:[function(require,module,exports){
+// Defining the compare/sort methods
+var asc;
+var desc;
+
+
+// Defining the sort by ASC method
+asc = function(a, b) {
+
+    if(!a || !b) return false;
+
+    // Sort by Published date
+    a = a.attributes.published;
+    b = b.attributes.published;
+
+    // Return sort
+    return a - b;
+
+};
+
+// Defining the sort by DESC method
+desc = function(a, b) {
+
+    if(!a || !b) return false;
+
+    // Sort by Published date
+    a = a.attributes.published;
+    b = b.attributes.published;
+
+    // Return sort
+    return b - a;
+
+};
+
+module.exports = {
+    asc: asc,
+    desc: desc
+};
+},{}],5:[function(require,module,exports){
 // Define the fetch method
 var fetch;
 
@@ -160,7 +212,7 @@ fetch = function(callback) {
 
 // Export the fetch method
 module.exports = fetch;
-},{}],5:[function(require,module,exports){
+},{}],6:[function(require,module,exports){
 // Defining parse vars
 var parse;
 var entry;
@@ -172,23 +224,41 @@ entry = function() {
     // Defining the viewCount
     var viewCount = 0;
 
+    // Defining the average rating
+    var averageRating = 100;
+
+    // Defining the Date
+    var date = 0;
+
     // Update the viewCount if it is available from stats
     var stats = this.yt$statistics;
     if(stats && stats.viewCount) {
         viewCount = stats.viewCount;
     }
 
+    // Defining the average rating
+    if(this.gd$rating && this.yt$rating && this.yt$rating.numLikes) {
+        averageRating = parseInt(this.yt$rating.numLikes, 10) / this.gd$rating.numRaters * 100;
+        averageRating = (averageRating).toFixed(2);
+    }
+
+    // Defining the date timestamp
+    if(this.published.$t) {
+        date = new Date( Date.parse( this.published.$t ) );
+    }
+
     // Return the attributes as object
     return {
         id: this.media$group.yt$videoid.$t,
         link: this.link[0].href,
-        published: this.published.$t,
+        published: date,
         rating: {
+            average: averageRating,
             likes: parseInt(this.yt$rating.numLikes, 10),
             dislikes: parseInt(this.yt$rating.numDislikes, 10)
         },
         title: this.title.$t,
-        thumbnail: this.media$group.media$thumbnail[2].url,
+        thumbnail: this.media$group.media$thumbnail[1].url,
         viewCount: parseInt(viewCount, 10)
     };
 

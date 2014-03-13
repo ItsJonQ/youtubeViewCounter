@@ -14,6 +14,8 @@ init = function() {
     // Fetch data from YouTube
     fetch(function(data) {
 
+        console.log(data);
+
         // Defining feed from data
         var feed = data.feed;
         if(!feed) return false;
@@ -24,6 +26,8 @@ init = function() {
 
         // Creating the video Collection
         var videos = new Videos(entries);
+
+        ko.applyBindings(videos);
 
         console.log(videos);
 

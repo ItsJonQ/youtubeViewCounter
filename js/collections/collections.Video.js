@@ -1,5 +1,7 @@
 // Utils
+var compare = require('../utils/utils.compare');
 var parse = require('../utils/utils.parse');
+
 // Models
 var VideoModel = require('../models/models.Video');
 
@@ -10,8 +12,11 @@ var Videos;
 // Creating the video collection class
 Videos = function(data) {
 
+    // Defining the Attributes for this collection
+    this.attributes = {};
+
     // Creating a models array collection
-    this.models = [];
+    this.models = ko.observableArray([]);
 
     // Defining the viewCountTotal
     this.viewCount = 0;
@@ -33,6 +38,11 @@ Videos = function(data) {
             this.add(Video);
 
         }
+
+        // Sorting the models by DESC order (based on Date)
+        this.models().sort(function(a, b) {
+            return compare.desc(a, b);
+        });
 
     };
 

@@ -4,29 +4,78 @@
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!-->
 <html class="no-js"> <!--<![endif]-->
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>ViewCount - YouTube</title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>ViewCount - YouTube</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
 
-        <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
 
-        <!-- No index -->
-        <meta name="robots" content="noindex">
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="public/css/main.css">
 
-    </head>
-    <body>
+    <!-- No index -->
+    <meta name="robots" content="noindex">
 
-        <!-- jQuery -->
-        <script type="text/javascript" src="bower_components/jquery/dist/jquery.min.js"></script>
+</head>
+<body>
 
-        <!-- Knockout -->
-        <script type="text/javascript" src="vendor/knockout.min.js"></script>
+    <!-- Container -->
+    <div class="container">
 
-        <!-- Main Script -->
-        <script type="text/javascript" src="public/js/main.js"></script>
+        <!-- Video List Container -->
+        <div class="col-md-8 col-solo">
 
-    </body>
+            <!-- Video List -->
+                <ul data-bind="template: { name: 'video-list-template', foreach: models }" class="list-group"></ul>
+
+        </div>
+
+    </div>
+
+
+    <script type="text/html" id="video-list-template">
+        <!-- Video Item -->
+        <li class="list-group-item">
+
+            <!-- View Count -->
+            <span class="badge" data-bind="text: attributes.viewCount"></span>
+
+            <!-- Video Media -->
+            <div class="block-media image">
+                <a data-bind="attr: { href: attributes.link }" target="_blank">
+                    <!-- <img data-bind="attr:{ src: attributes.thumbnail }" /> -->
+                </a>
+            </div>
+
+            <!-- Video Content -->
+            <div class="block-content">
+                <!-- Video Title -->
+                <h4 class="title">
+                    <a data-bind="attr: { href: attributes.link }, text: attributes.title" target="_blank"></a>
+                </h4>
+
+                <!-- Likes / Dislikes -->
+                <ul class="list-unstyled like-dislike">
+                    <li><span class="likes" data-bind="text: attributes.rating.likes"></span> Likes</li>
+                    <li><span class="dislikes" data-bind="text: attributes.rating.dislikes"></span> Dislikes</li>
+                    <li><span class="average" data-bind="text: attributes.rating.average"></span>% Positive</li>
+                </ul>
+            </div>
+
+
+        </li>
+    </script>
+
+    <!-- jQuery -->
+    <script type="text/javascript" src="bower_components/jquery/dist/jquery.min.js"></script>
+
+    <!-- Knockout -->
+    <script type="text/javascript" src="vendor/knockout.min.js"></script>
+
+    <!-- Main Script -->
+    <script type="text/javascript" src="public/js/main.js"></script>
+
+</body>
 </html>
