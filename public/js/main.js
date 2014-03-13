@@ -69,6 +69,7 @@ Videos = function(data) {
             // Creating a Video model from entry
             var Video = new VideoModel(parse.entry.call(entry));
 
+            // Adding the video to the collection
             this.add(Video);
 
         }
@@ -270,8 +271,8 @@ entry = function() {
     }
 
     // Defining the date timestamp
-    if(this.published.$t) {
-        date = new Date( Date.parse( this.published.$t ) );
+    if(this.media$group && this.media$group.yt$uploaded) {
+        date = new Date( Date.parse( this.media$group.yt$uploaded.$t ) );
     }
 
     // Return the attributes as object

@@ -43,6 +43,7 @@ Videos = function(data) {
             // Creating a Video model from entry
             var Video = new VideoModel(parse.entry.call(entry));
 
+            // Adding the video to the collection
             this.add(Video);
 
         }

@@ -28,8 +28,8 @@ entry = function() {
     }
 
     // Defining the date timestamp
-    if(this.published.$t) {
-        date = new Date( Date.parse( this.published.$t ) );
+    if(this.media$group && this.media$group.yt$uploaded) {
+        date = new Date( Date.parse( this.media$group.yt$uploaded.$t ) );
     }
 
     // Return the attributes as object
